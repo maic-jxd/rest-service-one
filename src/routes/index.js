@@ -6,7 +6,7 @@ import post from "./posts.routes.js";
 const router = Router()
 
 router.use('/api', user, post)
-router.use('*', (req, res) => {
+router.use('/*not_found', (req, res) => {
     return res.status(404).json({ message: 'Resource not found' });
 })
 

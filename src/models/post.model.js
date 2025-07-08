@@ -4,9 +4,11 @@ const schemaPost = new Schema(
     {
         description: { type: String, trim: true, default: 'Post of user' },
 
-        mimetype_file: { type: String, trim: true },
+        mimetype: { type: String, trim: true },
 
-        path_public: { type: String, trim: true },
+        fileId: { type: String, trim: true },
+
+        url: { type: String, trim: true },
 
         user_id: {
             type: Schema.Types.ObjectId,

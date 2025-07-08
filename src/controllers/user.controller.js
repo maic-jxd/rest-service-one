@@ -22,7 +22,7 @@ export const addUser = async (req, res) => {
         await user.save()
 
         return res.status(201).json({ msg: 'User created successfully', user })
-        
+
     } catch (err) {
         if (err.name === 'ValidationError')
             return res.status(400).json({ msg: 'Some data is required' });
