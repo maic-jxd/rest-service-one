@@ -19,7 +19,7 @@ export const isAdmin = async (req, res, next) => {
     try {
         const user = await userModel.findById(req.userId)
 
-        if(user.role === 'admin') next()
+        if(user.role === 'admin') return next()
 
         return res.status(403).json({ msg: 'USTED NO SE ENCUENTRA AUTORIZADO!' });
     } catch (error) {

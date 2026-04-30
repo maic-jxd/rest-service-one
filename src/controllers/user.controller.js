@@ -3,7 +3,7 @@ import { encrypt } from "../helpers/bcrypt.js";
 
 export const getUsers = async (req, res) => {
     try {
-        const data = await ModelUser.find()
+        const data = await ModelUser.find().select('-password')
         return res.status(200).json(data)
     } catch (err) {
         return res.status(500).json({ msg: err.message });
@@ -18,6 +18,9 @@ export const addUser = async (req, res) => {
             return res.status(400).json({ msg: `The user ${existe.username} already exists` })
 
         const user = new ModelUser(data)
+
+        if (!req.userId) user.role = 'user';
+
         user.password = await encrypt(data.password)
         await user.save()
 
@@ -34,7 +37,10 @@ export const addUser = async (req, res) => {
 export const getUser = async (req, res) => {
     try {
         const { id } = req.params
-        const data = await ModelUser.findById(id)
+        const data = await ModelUser.findById(id, { password: 0 })
+
+        if (!data) return res.status(404).json({ msg: 'User not found' })
+
         return res.status(200).json(data)
     } catch (err) {
         return res.status(500).json({ msg: err.message });

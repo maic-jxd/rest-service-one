@@ -3,7 +3,7 @@ import { Router } from "express";
 import multer from '../middlewares/uploadFile.js'
 
 import {
-    addPost, deletePost, getPost, getPosts, posts, updatePost
+    addPost, deletePost, getPost, getPosts, updatePost
 } from '../controllers/post.controller.js';
 
 import { verifyToken } from "../middlewares/verifyAuth.js";
@@ -20,6 +20,6 @@ rutas.route('/post/:id')
     .put([verifyToken, isPostOwner], [multer], updatePost)
     .delete([verifyToken, isPostOwner], deletePost)
 
-rutas.get('/posts', posts)
+rutas.get('/posts', getPosts)
 
 export default rutas

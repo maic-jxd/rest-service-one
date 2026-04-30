@@ -12,11 +12,9 @@ const rutas = Router()
 rutas.post('/auth', authUser)
 rutas.get('/main', [verifyToken], mainUser)
 
-rutas.post('/admin', [verifyToken, isAdmin], addUser)
-
 rutas.route('/user')
     .post(addUser)
-    .get(getUsers)
+    .get([verifyToken, isAdmin], getUsers)
 
 rutas.route('/user/:id')
     .get([verifyToken], getUser)

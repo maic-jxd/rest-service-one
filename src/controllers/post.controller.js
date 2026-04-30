@@ -4,6 +4,11 @@ import { imagekit } from '../config/imagekit.js';
 
 export const getPosts = async (req, res) => {
     try {
+        if (!req.userId) {
+            const data = await ModelPost.find({}, 'description url -_id')
+            return res.status(200).json(data)
+        }
+
         const data = await ModelPost.find({ user_id: req.userId })
         return res.status(200).json(data)
 
@@ -90,15 +95,6 @@ export const deletePost = async (req, res) => {
         await ModelPost.findByIdAndDelete(id);
 
         return res.status(200).json({ msg: 'Post deleted successfully' })
-    } catch (err) {
-        return res.status(500).json({ msg: err.message });
-    }
-}
-
-export const posts = async (req, res) => {
-    try {
-        const data = await ModelPost.find()
-        return res.status(200).json(data)
     } catch (err) {
         return res.status(500).json({ msg: err.message });
     }
